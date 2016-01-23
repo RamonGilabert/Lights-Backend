@@ -5,8 +5,9 @@
   "name": "lights-backend",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "~1.14.2",
     "express": "~4.13.3",
     "mongoose": "~4.3.6",
-    "body-parser": "~1.14.2"
+    "pg": "4.4.3"
   }
 }
