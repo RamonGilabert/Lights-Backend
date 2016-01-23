@@ -1,21 +1,18 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.set('port', (process.env.PORT || 5000));
 
-var port = process.env.PORT || 8080;
-var router = express.Router();
+app.use(express.static(__dirname + '/public'));
 
-/* Define the routes */
+// views is directory for all template files
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
-router.get('/', function(req, res) {
-    res.json({ message: "Welcome to the Lights API!" });
+app.get('/', function(request, response) {
+  response.render('pages/index');
 });
 
-/* Use the routes */
-
-app.use('/api', router);
-
-app.listen(port);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
