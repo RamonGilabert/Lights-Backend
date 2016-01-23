@@ -83,7 +83,7 @@
     </object>
     <object type="LMREQUEST" id="z105">
         <attribute name="uuid" type="string">0B3F752C-58F0-46FD-976E-71CF72C78F8C</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api</attribute>
+        <attribute name="url" type="string">https://lights-backend.herokuapp.com</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
