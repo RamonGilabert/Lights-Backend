@@ -1,0 +1,9 @@
+{
+  "name": "lights-api",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~4.13.3",
+    "mongoose": "~4.3.6",
+    "body-parser": "~1.14.2"
+  }
+}
