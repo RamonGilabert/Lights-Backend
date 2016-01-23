@@ -1,0 +1,12 @@
+{
+  "repository": "RamonGilabert/Lights-Backend",
+  "version": "0.0.1",
+  "author": "Ramon Gilabert",
+  "name": "lights-backend",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~4.13.3",
+    "mongoose": "~4.3.6",
+    "body-parser": "~1.14.2"
+  }
+}
