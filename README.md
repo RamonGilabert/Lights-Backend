@@ -2,6 +2,8 @@
 
 This is the backend for the Lights project that will be build in NodeJS.
 
+The link for the server is: [Backend](https://lights-backend.herokuapp.com).
+
 The server side of the project will provide basic functionality to:
 
 - `GET` an object called `light` that will contain information about if it's on, off, the intensity and RGB value.
