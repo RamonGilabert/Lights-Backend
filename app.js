@@ -16,9 +16,9 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-pg.connect(process.env.DATABASE_URL, function(error, client) {
+pg.connect(process.env.DATABASE_URL + '?ssl=true', function(error, client) {
   if (error) throw error;
-  
+
   console.log('Connected to postgres! Getting schemas...');
 
   client
