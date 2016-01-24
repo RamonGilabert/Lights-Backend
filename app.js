@@ -2,8 +2,18 @@ var express = require('express');
 var pg = require('pg');
 var app = express();
 
+var database = {
+  client: 'pg',
+  connection: process.env.DATABASE_URL,
+  searchPath: 'knex, public'
+};
+
+var knex = require('knex')(database);
+var bookshelf = require('bookshelf')(knex);
+
 app.use(express.static(__dirname + '/public'));
 
+app.set('bookshelf', bookshelf);
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
