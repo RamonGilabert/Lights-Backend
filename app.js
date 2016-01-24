@@ -1,6 +1,8 @@
 var express = require('express');
 var pg = require('pg');
+var mongoose = require('mongoose');
 var app = express();
+var light = require('./app/models/lights.js');
 
 app.use(express.static(__dirname + '/public'));
 

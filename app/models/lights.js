@@ -1,16 +1,12 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('database', 'username', 'password');
 
-var LightSchema = new Schema({
-  ID: Number,
-  controller_ID: Number,
-  created: Date,
-  updated: Date,
-  status: Boolean,
-  intensity: Number,
-  red: Number,
-  green: Number,
-  blue: Number
+var Light = sequelize.define('light', {
+  ID: Sequelize.FLOAT,
+  controller_ID: Sequelize.FLOAT,
+  status: Sequelize.BOOLEAN,
+  intensity: Sequelize.FLOAT,
+  red: Sequelize.FLOAT,
+  green: Sequelize.FLOAT,
+  blue: Sequelize.FLOAT
 });
-
-module.exports = mongoose.model('Light', LightSchema);
