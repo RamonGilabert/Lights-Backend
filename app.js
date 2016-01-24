@@ -25,15 +25,3 @@ app.get('/', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-pg.connect(process.env.DATABASE_URL, function(error, client) {
-  if (error) throw error;
-
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT * FROM lights WHERE controller_ID = 1;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
