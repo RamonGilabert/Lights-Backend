@@ -1,6 +1,6 @@
 var express = require('express');
 var pg = require('pg');
-var mongoose = require('mongoose');
+var sequelize = require('sequelize');
 var app = express();
 var light = require('./app/models/lights.js');
 
