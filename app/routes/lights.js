@@ -1,7 +1,7 @@
 
-module.export = function(app, bookshelf) {
+module.exports = function(app, bookshelf) {
 
-  var Light = require('./app/models/lights.js')(bookshelf);
+  var Light = require('../models/lights.js')(bookshelf);
 
   /* General */
 
@@ -18,4 +18,6 @@ module.export = function(app, bookshelf) {
   });
 
   /* POST */
-}
+
+  // TODO: Put the posts here.
+};
