@@ -18,10 +18,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/lights', function(request, response) {
-  console.log(request);
   new Light().fetchAll().then(function(lights) {
-    console.log(lights);
-    response.json({ message: 'Hello! This is the /lights directory.' });
+    response.json(lights.toJSON());
   });
 });
 
