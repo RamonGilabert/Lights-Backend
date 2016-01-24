@@ -18,7 +18,14 @@ module.exports = function(app, bookshelf) {
     });
   });
 
-  /* POST */
+  /* PUT */
 
-  // TODO: Put the posts here.
+  app.put('/lights/:id', function(request, response) {
+    console.log(request['params']['id']);
+    new Light({ 'id' : request['params']['id'] }).fetch().then(function(lights) {
+      response.json({ message: 'Cool story!', light: lights });
+    });
+  });
+
+  // TODO: Put the puts here.
 };
