@@ -1,7 +1,10 @@
 /* Lights model */
 
-var database = require('../database/schema.js');
+module.exports = function(bookshelf) {
 
-var Light = database.bookshelf.Model.extend({
-    tableName: 'lights'
-});
+  var Light = bookshelf.Model.extend({
+      tableName: 'lights'
+  });
+
+  return Light
+};

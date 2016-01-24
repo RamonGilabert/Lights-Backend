@@ -1,12 +1,14 @@
 var express = require('express');
 var pg = require('pg');
 var app = express();
-var database = require('./app/database/schema.js');
-var lights = require('./app/models/lights.js');
+var databaseAddress = process.env.DATABASE_URL || 'postgres://localhost';
+var bookshelf = require('./app/database/schema.js')(databaseAddress);
+
+var Light = require('./app/models/lights.js')(bookshelf);
 
 app.use(express.static(__dirname + '/public'));
 
-app.set('bookshelf', database.bookshelf);
+app.set('bookshelf', bookshelf);
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -16,8 +18,9 @@ app.get('/', function(request, response) {
 });
 
 app.get('/lights', function(request, response) {
-  new Light().fetchAll().then(function() {
-    console.log("SUP");
+  new Light().fetchAll().then(function(lights) {
+    console.log(lights);
+    response.json({ message: 'Hello! This is the /lights directory.' });
   });
 });
 
