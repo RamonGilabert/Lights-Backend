@@ -1,16 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+/* Lights model */
 
-var LightSchema = new Schema({
-  ID: Number,
-  controller_ID: Number,
-  created: Date,
-  updated: Date,
-  status: Boolean,
-  intensity: Number,
-  red: Number,
-  green: Number,
-  blue: Number
-});
+module.exports = function(bookshelf) {
 
-module.exports = mongoose.model('Light', LightSchema);
+  var Light = bookshelf.Model.extend({
+      tableName: 'lights'
+  });
+
+  return Light
+};
