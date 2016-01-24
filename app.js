@@ -1,8 +1,6 @@
 var express = require('express');
 var pg = require('pg');
-var sequelize = require('sequelize');
 var app = express();
-var light = require('./app/models/lights.js');
 
 app.use(express.static(__dirname + '/public'));
 
