@@ -1,3 +1,4 @@
+/* Lights routes */
 
 module.exports = function(app, bookshelf) {
 
