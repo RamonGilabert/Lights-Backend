@@ -19,6 +19,17 @@ module.exports = function(app, bookshelf) {
     });
   });
 
+  app.get('/lights/:id', function(request, response) {
+    new Light({ 'id' : request['params']['id'] }).fetch().then(function(lights) {
+
+      if (lights === null) {
+        response.sendStatus(444);
+      } else {
+        response.json(lights.toJSON());
+      }
+    })
+  });
+
   /* PUT */
 
   app.put('/lights/:id', function(request, response) {
