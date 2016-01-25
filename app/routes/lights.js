@@ -29,17 +29,16 @@ module.exports = function(app, bookshelf) {
       || body['red'] === undefined || body['green'] === undefined || body['blue'] === undefined) {
         response.sendStatus(400);
       } else {
-        light['id'] = body['id'];
-        light['controller_id'] = body['controller_id'];
-        light['status'] = body['status'];
-        light['intensity'] = body['intensity'];
-        light['red'] = body['red'];
-        light['blue'] = body['blue'];
-        light['green'] = body['green'];
-
-        console.log(light);
-
-        response.json({ message: 'Cool story!', light: light });
+        light.save({
+          'controller_id' : parseInt(body['controller_id']),
+          'status' : body['status'],
+          'intensity' : parseFloat(body['intensity']),
+          'red' : parseFloat(body['red']),
+          'blue' : parseFloat(body['blue']),
+          'green' : parseFloat(body['green'])
+        }, { patch : true }).then(function(light) {
+          response.json({ message: 'Cool story!', light: light });
+        });
       }
     });
   });

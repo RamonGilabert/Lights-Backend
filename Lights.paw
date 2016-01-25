@@ -118,7 +118,7 @@
     </object>
     <object type="LMREQUEST" id="z109">
         <attribute name="uuid" type="string">E20E593E-3469-47D3-81ED-1B50C0C1A299</attribute>
-        <attribute name="url" type="string">https://lights-backend.herokuapp.com/lights</attribute>
+        <attribute name="url" type="string">localhost:5000/lights/</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -132,7 +132,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z111"></relationship>
     </object>
     <object type="LMREQUEST" id="z110">
-        <attribute name="body" type="string">[{"data":{"json":"{\\"id\\":\\"1\\",\\"controller_id\\":\\"1\\",\\"status\\":\\"true\\",\\"intensity\\":\\"1\\",\\"red\\":\\"1\\",\\"green\\":\\"1\\",\\"blue\\":\\"1\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"id\\": 1,\\n  \\"controller_id\\": 1,\\n  \\"status\\": true,\\n  \\"intensity\\": 1,\\n  \\"red\\": 1,\\n  \\"green\\": 1,\\n  \\"blue\\": 1\\n}"]</attribute>
         <attribute name="uuid" type="string">2FE846C6-E85C-4A76-B5E3-413BDDE8E210</attribute>
         <attribute name="url" type="string">localhost:5000/lights/1</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
