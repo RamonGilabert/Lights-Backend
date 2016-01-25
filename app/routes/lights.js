@@ -14,8 +14,12 @@ module.exports = function(app, bookshelf) {
   /* GET */
 
   app.get('/lights', function(request, response) {
-    new Light().fetchAll().then(function(lights) {
-      response.json(lights.toJSON());
+    new Light({ 'controller_id' : request['headers']['controller_id'] }).fetch().then(function(lights) {
+      if (lights === null) {
+        response.json({});
+      } else {
+        response.json(lights.toJSON());
+      }
     });
   });
 
