@@ -3,6 +3,7 @@
 module.exports = function(app, bookshelf) {
 
   var Light = require('../models/lights.js')(bookshelf);
+  var Validator = require('../classes/validator.js');
 
   /* General */
 
@@ -24,9 +25,7 @@ module.exports = function(app, bookshelf) {
     new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
       var body = request['body'];
 
-      if (body === undefined || body['id'] === undefined || body['controller_id'] === undefined
-      || body['status'] === undefined || body['intensity'] === undefined
-      || body['red'] === undefined || body['green'] === undefined || body['blue'] === undefined) {
+      if (Validator.checkUndefinedObject(body, light.attributes)) {
         response.sendStatus(400);
       } else {
         light.save({
