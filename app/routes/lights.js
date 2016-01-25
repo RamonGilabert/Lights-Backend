@@ -24,12 +24,14 @@ module.exports = function(app, bookshelf) {
   });
 
   app.get('/lights/:id', function(request, response) {
-    new Light({ 'id' : request['params']['id'] }).fetch().then(function(lights) {
+    new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
 
-      if (lights === null) {
+      if (light === null) {
         response.sendStatus(444);
+      } else if (request['headers']['controller_id'] != light.attributes['controller_id']) {
+        response.sendStatus(400);
       } else {
-        response.json(lights.toJSON());
+        response.json(light.toJSON());
       }
     })
   });
@@ -40,7 +42,8 @@ module.exports = function(app, bookshelf) {
     new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
       var body = request['body'];
 
-      if (Validator.checkUndefinedObject(body, light.attributes)) {
+      if (Validator.checkUndefinedObject(body, light.attributes)
+      || request['headers']['controller_id'] != light.attributes['controller_id']) {
         response.sendStatus(400);
       } else {
         light.save({
