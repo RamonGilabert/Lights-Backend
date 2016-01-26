@@ -3,6 +3,7 @@
 module.exports = function(app, bookshelf) {
 
   var Light = require('../models/lights.js')(bookshelf);
+  var Controllers = require('../models/controllers.js')(bookshelf);
   var Validator = require('../classes/validator.js');
 
   /* General */
@@ -80,22 +81,28 @@ module.exports = function(app, bookshelf) {
     if (request['headers']['admin'] === "true") {
       var body = request['body'];
 
-      new Light().fetchAll().then(function(lights) {
-        new Light({
-          'id' : lights.length,
-          'controller_id' : parseFloat(request['headers']['controller_id']),
-          'created' : new Date(),
-          'updated' : new Date(),
-          'status' : false,
-          'intensity' : parseFloat(body['intensity']),
-          'red' : parseFloat(body['red']),
-          'blue' : parseFloat(body['blue']),
-          'green' : parseFloat(body['green'])
-        }).save(null, { method: 'insert' }).then(function(light) {
-          response.json({ message: 'Cool story!', light: light });
-        }).catch(function(error) {
-          response.sendStatus(500);
-        })
+      new Controllers({ 'id' : request['headers']['controller_id'] }).fetch().then(function(controllers) {
+        if (controllers != null) {
+          new Light().fetchAll().then(function(lights) {
+            new Light({
+              'id' : lights.length,
+              'controller_id' : parseFloat(request['headers']['controller_id']),
+              'created' : new Date(),
+              'updated' : new Date(),
+              'status' : false,
+              'intensity' : parseFloat(body['intensity']),
+              'red' : parseFloat(body['red']),
+              'blue' : parseFloat(body['blue']),
+              'green' : parseFloat(body['green'])
+            }).save(null, { method: 'insert' }).then(function(light) {
+              response.json({ message: 'Cool story!', light: light });
+            }).catch(function(error) {
+              response.sendStatus(500);
+            });
+          });
+        } else {
+          response.sendStatus(400);
+        }
       }).catch(function(error) {
         response.sendStatus(500);
       });

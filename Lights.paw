@@ -410,7 +410,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z141"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z138">
-        <attribute name="value" type="string">0</attribute>
+        <attribute name="value" type="string">1</attribute>
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">controller_id</attribute>
         <attribute name="enabled" type="bool">1</attribute>
