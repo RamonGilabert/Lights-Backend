@@ -60,7 +60,7 @@ module.exports = function(app, bookshelf) {
       } else {
         light.save({
           'updated' : new Date(),
-          'status' : Boolean(body['status']),
+          'status' : body['status'],
           'intensity' : parseFloat(body['intensity']),
           'red' : parseFloat(body['red']),
           'blue' : parseFloat(body['blue']),
@@ -77,7 +77,7 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
-    if (request['headers']['admin'] != undefined && Boolean(request['headers']['admin']) === true) {
+    if (request['headers']['admin'] === "true") {
       var body = request['body'];
 
       new Light().fetchAll().then(function(lights) {
@@ -107,7 +107,7 @@ module.exports = function(app, bookshelf) {
   /* DELETE */
 
   app.delete('/lights/:id', function(request, response) {
-    if (request['headers']['admin'] != undefined && Boolean(request['headers']['admin']) === true) {
+    if (request['headers']['admin'] === "true") {
       new Light({ 'id' : request['params']['id'], 'controller_id' : request['headers']['controller_id'] }).destroy().then(function() {
         response.json({ message: "Success!" })
       }).catch(function(error) {
