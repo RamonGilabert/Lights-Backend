@@ -27,7 +27,7 @@ module.exports = function(app, bookshelf) {
     new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
 
       if (light === null) {
-        response.sendStatus(444);
+        response.json({});
       } else if (request['headers']['controller_id'] != light.attributes['controller_id']) {
         response.sendStatus(400);
       } else {
@@ -44,7 +44,7 @@ module.exports = function(app, bookshelf) {
 
       if (Validator.checkUndefinedObject(body, light.attributes)
       || request['headers']['controller_id'] != light.attributes['controller_id']) {
-        response.sendStatus(400);
+        response.sendStatus(401);
       } else {
         light.save({
           'controller_id' : parseInt(body['controller_id']),
@@ -59,6 +59,4 @@ module.exports = function(app, bookshelf) {
       }
     });
   });
-
-  // TODO: Put the puts here.
 };
