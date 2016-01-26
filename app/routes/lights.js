@@ -59,6 +59,7 @@ module.exports = function(app, bookshelf) {
         response.sendStatus(401);
       } else {
         light.save({
+          'updated' : new Date(),
           'status' : Boolean(body['status']),
           'intensity' : parseFloat(body['intensity']),
           'red' : parseFloat(body['red']),
