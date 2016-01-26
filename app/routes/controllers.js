@@ -29,6 +29,18 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/controllers', function(request, response) {
-
+    if (Boolean(request['headers']['admin']) === true) {
+      new Controllers().fetchAll().then(function(controllers) {
+        new Controllers().save().then(function(controller) {
+          'id' : controllers.length,
+          'created' : new Date(),
+          'updated' : new Date()
+        });
+      }).catch(function(error) {
+        response.sendStatus(500);
+      });
+    } else {
+      response.sendStatus(400);
+    }
   });
 };
