@@ -47,7 +47,6 @@ module.exports = function(app, bookshelf) {
         response.sendStatus(401);
       } else {
         light.save({
-          'controller_id' : parseInt(body['controller_id']),
           'status' : body['status'],
           'intensity' : parseFloat(body['intensity']),
           'red' : parseFloat(body['red']),
@@ -58,5 +57,11 @@ module.exports = function(app, bookshelf) {
         });
       }
     });
+  });
+
+  /* POST */
+
+  app.post('/lights', function(request, response) {
+
   });
 };
