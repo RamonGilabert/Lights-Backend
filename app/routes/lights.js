@@ -47,7 +47,7 @@ module.exports = function(app, bookshelf) {
         response.sendStatus(401);
       } else {
         light.save({
-          'status' : body['status'],
+          'status' : Boolean(body['status']),
           'intensity' : parseFloat(body['intensity']),
           'red' : parseFloat(body['red']),
           'blue' : parseFloat(body['blue']),
@@ -62,6 +62,34 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
+    if (request['headers']['admin'] != undefined && Boolean(request['headers']['admin']) === true) {
+      var body = request['body'];
 
+      new Light().fetchAll().then(function(lights) {
+        new Light({
+          'id' : lights.length,
+          'controller_id' : request['headers']['controller_id'],
+          'created' : new Date(),
+          'updated' : new Date(),
+          'status' : false,
+          'intensity' : parseFloat(body['intensity']),
+          'red' : parseFloat(body['red']),
+          'blue' : parseFloat(body['blue']),
+          'green' : parseFloat(body['green'])
+        }).save(null, { method: 'insert' }).then(function(light) {
+          response.json({ message: 'Cool story!', light: light });
+        })
+      });
+    } else {
+      response.sendStatus(400);
+    }
+  });
+
+  /* DELETE */
+
+  app.delete('/lights/:id', function(request, response) {
+    if (request['headers']['admin'] != undefined && request['headers']['admin'] === true) {
+
+    }
   });
 };
