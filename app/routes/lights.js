@@ -106,8 +106,14 @@ module.exports = function(app, bookshelf) {
   /* DELETE */
 
   app.delete('/lights/:id', function(request, response) {
-    if (request['headers']['admin'] != undefined && request['headers']['admin'] === true) {
-
+    if (request['headers']['admin'] != undefined && Boolean(request['headers']['admin']) === true) {
+      new Light({ 'id' : request['params']['id'], 'controller_id' : request['headers']['controller_id'] }).destroy().then(function() {
+        response.json({ message: "Success!" })
+      }).catch(function(error) {
+        response.sendStatus(500);
+      });
+    } else {
+      response.sendStatus(400);
     }
   });
 };
