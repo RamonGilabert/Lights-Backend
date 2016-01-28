@@ -8,8 +8,12 @@ module.exports = function(app, bookshelf) {
 
   // GET
 
+  app.get('/schedules', function(request, response) {
+
+  });
+
   app.get('/schedules/:id', function(request, response) {
-    // TODO: Show the schedules for that time.
+    
   });
 
   // POST
@@ -35,6 +39,7 @@ module.exports = function(app, bookshelf) {
             'green' : parseFloat(request['body']['green']),
             'blue' : parseFloat(request['body']['blue'])
           }).save(null, { method: 'insert' }).then(function(schedule) {
+            // TODO: Do the schedule to send it over.
             response.json({ message: "Success!", schedule: schedule })
           }).catch(function(error) {
             response.sendStatus(500);
@@ -42,7 +47,6 @@ module.exports = function(app, bookshelf) {
         }).catch(function() {
           response.sendStatus(500);
         });
-        // TODO: Do the schedule to send it over.
       } else {
         response.sendStatus(400);
       }
