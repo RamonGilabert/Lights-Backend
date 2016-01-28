@@ -85,7 +85,7 @@ module.exports = function(app, bookshelf) {
         if (controllers != null) {
           new Light().fetchAll().then(function(lights) {
             new Light({
-              'id' : lights.length,
+              'id' : parseInt(lights.last()['attributes']['id']) + 1,
               'controller_id' : parseFloat(request['headers']['controller_id']),
               'created' : new Date(),
               'updated' : new Date(),
@@ -115,8 +115,16 @@ module.exports = function(app, bookshelf) {
 
   app.delete('/lights/:id', function(request, response) {
     if (request['headers']['admin'] === "true") {
-      new Light({ 'id' : request['params']['id'], 'controller_id' : request['headers']['controller_id'] }).destroy().then(function() {
-        response.json({ message: "Success!" })
+      new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
+        if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
+            light.destroy().then(function(light) {
+              response.json({ message: "Success!" })
+            }).catch(function(error) {
+              response.sendStatus(500);
+            });
+        } else {
+          response.sendStatus(400);
+        }
       }).catch(function(error) {
         response.sendStatus(500);
       });

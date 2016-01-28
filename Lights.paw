@@ -223,7 +223,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z114"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z121">
-        <attribute name="value" type="string">0</attribute>
+        <attribute name="value" type="string">1</attribute>
         <attribute name="order" type="int64">2</attribute>
         <attribute name="name" type="string">controller_id</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -476,7 +476,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z147"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">0</attribute>
+        <attribute name="value" type="string">1</attribute>
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">controller_id</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -507,7 +507,7 @@
     </object>
     <object type="LMREQUEST" id="z147">
         <attribute name="uuid" type="string">419D5694-EBCD-4687-8C44-3A9C8B069C54</attribute>
-        <attribute name="url" type="string">localhost:5000/lights/1</attribute>
+        <attribute name="url" type="string">localhost:5000/lights/4</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -518,7 +518,7 @@
         <attribute name="name" type="string">Lights</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z125"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z143 z144 z145 z146"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z146 z145 z143 z144"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z148">
         <attribute name="value" type="string"></attribute>
