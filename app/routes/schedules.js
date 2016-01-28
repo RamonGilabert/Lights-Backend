@@ -13,7 +13,24 @@ module.exports = function(app, bookshelf) {
   });
 
   app.get('/schedules/:id', function(request, response) {
-    
+    new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
+      if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
+        new Schedule().fetchAll().then(function(schedules) {
+          var lightSchedules = [];
+          schedules.forEach(function(schedule) {
+            if (schedule['attributes']['light_id'] == request['params']['id']) {
+              lightSchedules.push(schedule);
+            }
+          });
+
+          response.json({ message: "Cool story!", schedules: lightSchedules });
+        }).catch(function(error) {
+          response.sendStatus(500);
+        });
+      } else {
+        response.sendStatus(400);
+      }
+    });
   });
 
   // POST
