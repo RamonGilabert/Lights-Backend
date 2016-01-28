@@ -83,9 +83,10 @@ module.exports = function(app, bookshelf) {
 
       new Controllers({ 'id' : request['headers']['controller_id'] }).fetch().then(function(controllers) {
         if (controllers != null) {
-          new Light().fetchAll().then(function(lights) {
+          new Light().query(function(query) { query.orderBy('id'); }).fetchAll().then(function(lights) {
+            var lightID = parseInt(lights.last()['attributes']['id']) + 1 < lights.length ? lights.length : parseInt(lights.last()['attributes']['id']) + 1
             new Light({
-              'id' : parseInt(lights.last()['attributes']['id']) + 1,
+              'id' : lightID,
               'controller_id' : parseFloat(request['headers']['controller_id']),
               'created' : new Date(),
               'updated' : new Date(),
