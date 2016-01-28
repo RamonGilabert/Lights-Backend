@@ -1148,9 +1148,9 @@
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
         <attribute name="redirectauthorization" type="bool">0</attribute>
-        <attribute name="method" type="string">GET</attribute>
+        <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"light_id\\": 1,\\n  \\"schedule\\": 2016-03-10 17:16:18,\\n  \\"status\\": true,\\n  \\"intensity\\": 1,\\n  \\"red\\": 1,\\n  \\"green\\": 1,\\n  \\"blue\\": 1\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"light_id\\": 0,\\n  \\"schedule\\": \\"2016-03-10 17:16:18\\",\\n  \\"status\\": true,\\n  \\"intensity\\": 1,\\n  \\"red\\": 1,\\n  \\"green\\": 1,\\n  \\"blue\\": 1\\n}"]</attribute>
         <attribute name="order" type="int64">2</attribute>
         <attribute name="name" type="string">Schedules</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z201"></relationship>

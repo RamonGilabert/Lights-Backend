@@ -18,5 +18,5 @@ app.listen(app.get('port'), function() {
 
   require('./app/routes/lights.js')(app, bookshelf);
   require('./app/routes/controllers.js')(app, bookshelf);
-  require('./app/routes/schedule.js')(app, bookshelf);
+  require('./app/routes/schedules.js')(app, bookshelf);
 });
