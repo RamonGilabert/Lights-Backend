@@ -8,10 +8,6 @@ module.exports = function(app, bookshelf) {
 
   // GET
 
-  app.get('/schedules', function(request, response) {
-
-  });
-
   app.get('/schedules/:id', function(request, response) {
     new Light({ 'id' : request['params']['id'] }).fetch().then(function(light) {
       if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
