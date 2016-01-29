@@ -140,7 +140,51 @@ Needs to be said that, to be able to `POST` and `DELETE` lights you need to be a
 
 The controllers in this case are going to be the hubs controlled by Raspberry Pi's. Every controller will be able to have multiple lights.
 
-The controllers' API looks exactly the same way the lights API does. The only thing the client won't have is the access to `PUT` values in the controller, nothing needs to change there.
+The controllers' API looks exactly the same way the lights API does. The only thing the client won't have is the access to `PUT` values in the controller, nothing needs to change there. The request will be the following.
+
+#### GET - /controllers
+
+With one controller id as an option to check how the controller looks like. The answer will look like the following.
+
+```json
+[
+  {
+    "id": 1,
+    "created": "2016-01-24T00:00:00.000Z",
+    "updated": "2016-01-24T00:00:00.000Z"
+  },
+  {
+    "id": 0,
+    "created": "2016-01-24T00:00:00.000Z",
+    "updated": "2016-01-24T00:00:00.000Z"
+  }
+]
+```
+
+#### POST - /controllers
+
+The client will get the following response.
+
+```json
+{
+  "message": "Created!",
+  "controller": {
+    "id": 4,
+    "created": "2016-01-28T20:44:23.842Z",
+    "updated": "2016-01-28T20:44:23.842Z"
+  }
+}
+```
+
+#### DELETE - /controllers/:id
+
+The answer will be the following.
+
+```json
+{
+  "message": "Destroyed!"
+}
+```
 
 ## Schedules
 
