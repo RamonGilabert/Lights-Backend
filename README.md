@@ -27,11 +27,112 @@ The server's main part is to control the values of the lights, intensity, status
 
 #### GET - /lights
 
+With the possibility of extend the get request with an specific ID, this request will return the following json.
+
+```json
+[
+  {
+    "id": 5,
+    "created": "2016-01-28T00:00:00.000Z",
+    "updated": "2016-01-28T00:00:00.000Z",
+    "status": false,
+    "intensity": 1,
+    "red": 1,
+    "green": 1,
+    "blue": 1,
+    "controller_id": 1
+  },
+  {
+    "id": 6,
+    "created": "2016-01-28T00:00:00.000Z",
+    "updated": "2016-01-28T00:00:00.000Z",
+    "status": false,
+    "intensity": 1,
+    "red": 1,
+    "green": 1,
+    "blue": 1,
+    "controller_id": 1
+  }
+]
+```
+
 #### PUT - /lights/:id
+
+This request will be to change a value of a specific light, the request will look like the following.
+
+```json
+{
+  "id": 1,
+  "controller_id": 1,
+  "status": true,
+  "intensity": 1,
+  "red": 1,
+  "green": 1,
+  "blue": 1
+}
+```
+
+The request's answer will be the following.
+
+```json
+{
+  "message": "Cool story!",
+  "light": {
+    "id": 1,
+    "created": "2016-01-24T00:00:00.000Z",
+    "updated": "2016-01-24T00:00:00.000Z",
+    "status": false,
+    "intensity": 1,
+    "red": 1,
+    "green": 1,
+    "blue": 1,
+    "controller_id": 1
+  }
+}
+```
 
 #### POST - /lights
 
+As an easy way to create lights without having to mess around with a database we have a post of lights.
+
+```json
+{
+  "status": true,
+  "intensity": 1,
+  "red": 1,
+  "green": 1,
+  "blue": 1
+}
+```
+
+And the response will be.
+
+```json
+{
+  "message": "Cool story!",
+  "light": {
+    "id": 10,
+    "controller_id": 1,
+    "created": "2016-01-28T21:56:42.139Z",
+    "updated": "2016-01-28T21:56:42.139Z",
+    "status": false,
+    "intensity": 1,
+    "red": 1,
+    "blue": 1,
+    "green": 1
+  }
+}
+```
+
 #### DELETE - /lights/:id
+
+When deleting a light, if the validation is correct, the client will recive a message back.
+
+```json
+{
+  "message": "Success!"
+}
+```
 
 ### Controllers
 
