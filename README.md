@@ -14,9 +14,24 @@ The server side of the project will provide basic functionality to:
 
 ## Documentation
 
+The server will handle three types of data, lights, controllers and schedules. The header of each will be the same:
+
+```json
+Content-Type: application/json
+controller_id: id
+```
+
 ### Lights
 
 The server's main part is to control the values of the lights, intensity, status, red, green and blue values.
+
+#### GET - /lights
+
+#### PUT - /lights/:id
+
+#### POST - /lights
+
+#### DELETE - /lights/:id
 
 ### Controllers
 
