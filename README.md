@@ -15,18 +15,18 @@ The server side of the project will provide basic functionality to:
 ## Documentation
 
 - [Lights](https://github.com/RamonGilabert/Lights-Backend#lights)
-  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---lights)
-  - [PUT](https://github.com/RamonGilabert/Lights-Backend#put---lightsid)
-  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---lights)
-  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---lightsid)
+  - [Get](https://github.com/RamonGilabert/Lights-Backend#get---lights)
+  - [Put](https://github.com/RamonGilabert/Lights-Backend#put---lightsid)
+  - [Post](https://github.com/RamonGilabert/Lights-Backend#post---lights)
+  - [Delete](https://github.com/RamonGilabert/Lights-Backend#delete---lightsid)
 - [Controllers](https://github.com/RamonGilabert/Lights-Backend#controllers)
-  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---controllers)
-  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---controllers)
-  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---controllersid)
+  - [Get](https://github.com/RamonGilabert/Lights-Backend#get---controllers)
+  - [Post](https://github.com/RamonGilabert/Lights-Backend#post---controllers)
+  - [Delete](https://github.com/RamonGilabert/Lights-Backend#delete---controllersid)
 - [Schedules](https://github.com/RamonGilabert/Lights-Backend#schedules)
-  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---scheduleslight_id)
-  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---scheduleslight_id)
-  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---schedulesid)
+  - [Get](https://github.com/RamonGilabert/Lights-Backend#get---scheduleslight_id)
+  - [Post](https://github.com/RamonGilabert/Lights-Backend#post---scheduleslight_id)
+  - [Delete](https://github.com/RamonGilabert/Lights-Backend#delete---schedulesid)
 
 ## Headers
 
