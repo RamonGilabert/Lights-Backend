@@ -31,8 +31,8 @@ module.exports = function(app, bookshelf) {
 
   // POST
 
-  app.post('/schedules', function(request, response) {
-    new Light({ 'id' : request['body']['light_id'] }).fetch().then(function(light) {
+  app.post('/schedules/:light_id', function(request, response) {
+    new Light({ 'id' : request['params']['light_id'] }).fetch().then(function(light) {
       if (parseInt(request['headers']['controller_id']) === parseInt(light['attributes']['id'])) {
         new Schedule().query(function(query) { query.orderBy('id'); }).fetchAll().then(function(schedules) {
           var scheduleID = schedules.length
@@ -43,7 +43,7 @@ module.exports = function(app, bookshelf) {
 
           new Schedule({
             'id' : scheduleID,
-            'light_id' : parseInt(request['body']['light_id']),
+            'light_id' : parseInt(request['params']['light_id']),
             'created' : new Date(),
             'schedule' : new Date(request['body']['schedule']),
             'status' : request['body']['status'],
@@ -66,5 +66,11 @@ module.exports = function(app, bookshelf) {
     }).catch(function(error) {
       response.sendStatus(500);
     });
+  });
+
+  // DELETE
+
+  app.delete('/schedules/:light_id/:id', function(request, response) {
+    
   });
 }
