@@ -21,7 +21,7 @@ Content-Type: application/json
 controller_id: id
 ```
 
-### Lights
+## Lights
 
 The server's main part is to control the values of the lights, intensity, status, red, green and blue values.
 
@@ -136,13 +136,13 @@ When deleting a light, if the validation is correct, the client will receive a m
 
 Needs to be said that, to be able to `POST` and `DELETE` lights you need to be an admin.
 
-### Controllers
+## Controllers
 
 The controllers in this case are going to be the hubs controlled by Raspberry Pi's. Every controller will be able to have multiple lights.
 
 The controllers' API looks exactly the same way the lights API does. The only thing the client won't have is the access to `PUT` values in the controller, nothing needs to change there.
 
-### Schedules
+## Schedules
 
 The schedules is just another part of a light, but as an extension. You can have multiple schedules at once.
 
