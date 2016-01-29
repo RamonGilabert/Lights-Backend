@@ -71,7 +71,6 @@ module.exports = function(app, bookshelf) {
   // DELETE
 
   app.delete('/schedules/:id', function(request, response) {
-    console.log(request['body']['light_id'])
     new Light({ 'id' : request['body']['light_id'] }).fetch().then(function(light) {
       if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
         new Schedule({ 'id' : request['params']['id'] }).fetch().then(function(schedule) {
