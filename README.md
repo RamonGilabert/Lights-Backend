@@ -14,12 +14,30 @@ The server side of the project will provide basic functionality to:
 
 ## Documentation
 
+- [Lights](https://github.com/RamonGilabert/Lights-Backend#lights)
+  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---lights)
+  - [PUT](https://github.com/RamonGilabert/Lights-Backend#put---lightsid)
+  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---lights)
+  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---lightsid)
+- [Controllers](https://github.com/RamonGilabert/Lights-Backend#controllers)
+  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---controllers)
+  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---controllers)
+  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---controllersid)
+- [Schedules](https://github.com/RamonGilabert/Lights-Backend#schedules)
+  - [GET](https://github.com/RamonGilabert/Lights-Backend#get---scheduleslight_id)
+  - [POST](https://github.com/RamonGilabert/Lights-Backend#post---scheduleslight_id)
+  - [DELETE](https://github.com/RamonGilabert/Lights-Backend#delete---schedulesid)
+
+## Headers
+
 The server will handle three types of data, lights, controllers and schedules. The header of each will be the same:
 
 ```json
 Content-Type: application/json
 controller_id: id
 ```
+
+As an optional, you might want to put a value of `true` in an `admin` parameter to be able to post and delete stuff.
 
 ## Lights
 
