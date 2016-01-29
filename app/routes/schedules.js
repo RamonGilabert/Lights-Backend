@@ -70,7 +70,27 @@ module.exports = function(app, bookshelf) {
 
   // DELETE
 
-  app.delete('/schedules/:light_id/:id', function(request, response) {
-    
+  app.delete('/schedules/:id', function(request, response) {
+    console.log(request['body']['light_id'])
+    new Light({ 'id' : request['body']['light_id'] }).fetch().then(function(light) {
+      if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
+        new Schedule({ 'id' : request['params']['id'] }).fetch().then(function(schedule) {
+          if (parseInt(schedule['attributes']['light_id']) === parseInt(request['body']['light_id'])) {
+            schedule.destroy().then(function() {
+              response.json({ message: "Schedule destroyed!" });
+              // TODO: Check the schedule.
+            })
+          } else {
+            response.sendStatus(400);
+          }
+        }).catch(function(error) {
+          response.sendStatus(500);
+        });
+      } else {
+        response.sendStatus(400);
+      }
+    }).catch(function(error) {
+      response.sendStatus(500);
+    });
   });
 }
