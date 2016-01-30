@@ -75,9 +75,9 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
-    Validate.headers(request, response)
-      .then(Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])
-      .then(Validate.admin(request, response)
+    Validate.admin(request, response)
+      .then(Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']))
+      .then(Validate.headers(request, response))
       .then(function() {
         var body = request['body'];
 
@@ -109,29 +109,28 @@ module.exports = function(app, bookshelf) {
           }).catch(function(error) {
             response.sendStatus(500);
           });
-      }));
+      });
   });
 
   /* DELETE */
 
   app.delete('/lights/:id', function(request, response) {
     Validate.admin(request, response)
+      .then(Validate.headers(request, response))
       .then(function() {
         new Light({ 'id' : request.params['id'] })
           .fetch()
           .then(function(light) {
-            if (Validate.controller(request, light)) {
+            Validate.controller(request, light, response).then(function() {
               light.destroy().then(function(light) {
                 response.json({ message: "Success!" })
               }).catch(function(error) {
                 response.sendStatus(500);
               });
-            } else {
-              response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' });
-            }
+            });
           }).catch(function(error) {
             response.sendStatus(500);
           });
       });
-  });
+    });
 };
