@@ -15,24 +15,23 @@ module.exports = function(app, bookshelf) {
   /* GET */
 
   app.get('/lights', function(request, response) {
+    var errors = Validator.validateHeaders(request['headers'])
+    if (errors.length > 0) { response.json(400, { errors: errors }); };
+
     new Light()
       .fetchAll()
       .then(function(lights) {
         var controllerLights = [];
 
         lights.forEach(function(light) {
-          if (parseFloat(light['attributes']['controller_id']) === parseFloat(request['headers']['controller_id'])) {
+          if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
             controllerLights.push(light);
           }
         });
 
-        if (lights === null) {
-          response.json({});
-        } else {
-          response.json(controllerLights);
-        }
+        response.json(controllerLights);
       }).catch(function(error) {
-        response.sendStatus(500);
+        response.json(500, { error: error });
       });
   });
 

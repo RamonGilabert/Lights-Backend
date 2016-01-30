@@ -3,21 +3,18 @@ module.exports = {
 
   validate: function(object, keys) {
     var errors = [];
-    var statusCode = 200;
 
     for (var key in keys) {
       if (object[key] === undefined) {
         errors.push(key + ' cannot be undefined.');
-        statusCode = 400;
       }
     }
 
-    return { errors: errors, statusCode: statusCode };
+    return errors;
   }
 
   validateHeaders: function(object) {
     var errors = [];
-    var statusCode = 200;
 
     if (object['Content-Type'] === undefined) {
       errors.push('Content-Type cannot be undefined.')
@@ -26,6 +23,8 @@ module.exports = {
     if (parseInt(object['controller_id']) === undefined) {
       errors.push('controller_id cannot be undefined.')
     }
+
+    return errors
   }
 
   handleError: function(response, error) {
