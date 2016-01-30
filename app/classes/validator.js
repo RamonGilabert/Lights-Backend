@@ -2,27 +2,54 @@
 module.exports = {
 
   validate: function(request, response, keys) {
-    var errors = [];
+    return new Promise(function(resolve, reject) {
+      var errors = [];
 
-    keys.forEach(function(key) {
-      if (request[key] === undefined) {
-        errors.push(key + ' cannot be undefined.');
+      keys.forEach(function(key) {
+        if (request[key] === undefined) {
+          errors.push(key + ' cannot be undefined.');
+        }
+      });
+
+      if (errors.length > 0) {
+        response.status(400).send({ error: errors });
+        reject();
+      } else {
+        resolve();
       }
     });
-
-    if (errors.length > 0) {
-      response.status(400).send({ error: errors });
-    }
-    console.log("Suo");
-    return (errors.length === 0);
   },
 
   headers: function(request, response) {
     return this.validate(request.headers, response, ['content-type', 'controller_id']);
   },
 
-  controller: function(request, light) {
+  controllers: function(request, light) {
     return (parseInt(light.attributes['controller_id']) === parseInt(request.headers['controller_id']));
+  },
+
+  controller: function(request, light, response) {
+    return new Promise(function(resolve, reject) {
+      var value = parseInt(light.attributes['controller_id']) === parseInt(request.headers['controller_id']);
+
+      if (value) {
+        resolve();
+      } else {
+        response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' })
+        reject();
+      }
+    });
+  },
+
+  admin: function(request, response) {
+    return new Promise(function(resolve, reject) {
+      if (request.headers['admin'] === "true" || request.headers['admin']) {
+        resolve();
+      } else {
+        response.status(401).send({ error : 'You are not an admin. 😠' });
+        reject();
+      }
+    });
   },
 
   checkUndefined: function(object) {
