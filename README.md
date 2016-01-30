@@ -51,17 +51,6 @@ With the possibility of extend the get request with an specific ID, this request
     "green": 1,
     "blue": 1,
     "controller_id": 1
-  },
-  {
-    "id": 6,
-    "created": "2016-01-28T00:00:00.000Z",
-    "updated": "2016-01-28T00:00:00.000Z",
-    "status": false,
-    "intensity": 1,
-    "red": 1,
-    "green": 1,
-    "blue": 1,
-    "controller_id": 1
   }
 ]
 ```
@@ -162,11 +151,6 @@ With one controller id as an option to check how the controller looks like. The 
     "id": 1,
     "created": "2016-01-24T00:00:00.000Z",
     "updated": "2016-01-24T00:00:00.000Z"
-  },
-  {
-    "id": 0,
-    "created": "2016-01-24T00:00:00.000Z",
-    "updated": "2016-01-24T00:00:00.000Z"
   }
 ]
 ```
@@ -218,17 +202,6 @@ The response to the request will be the following.
       "green": 1,
       "blue": 1,
       "id": 0
-    },
-    {
-      "light_id": 0,
-      "created": "2016-01-28T00:00:00.000Z",
-      "schedule": "2016-03-10T00:00:00.000Z",
-      "status": true,
-      "intensity": 1,
-      "red": 1,
-      "green": 1,
-      "blue": 1,
-      "id": 1
     }
   ]
 }
