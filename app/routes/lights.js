@@ -41,7 +41,7 @@ module.exports = function(app, bookshelf) {
             response.json(light);
           });
         }).catch(function(error) {
-          response.sendStatus(500);
+          response.status(500).send(error.message);
         });
     });
   });
@@ -65,7 +65,7 @@ module.exports = function(app, bookshelf) {
             }, { patch : true }).then(function(light) {
               response.json({ message: 'Cool story!', light: light });
             }).catch(function(error) {
-              response.sendStatus(500);
+              response.status(500).send(error.message);
             });
           });
         });
@@ -103,11 +103,11 @@ module.exports = function(app, bookshelf) {
                 }).save(null, { method: 'insert' }).then(function(light) {
                   response.json({ message: 'Cool story!', light: light });
                 }).catch(function(error) {
-                  response.sendStatus(500);
+                  response.status(500).send(error.message);
                 });
             });
           }).catch(function(error) {
-            response.sendStatus(500);
+            response.status(500).send(error.message);
           });
       });
   });
@@ -125,11 +125,11 @@ module.exports = function(app, bookshelf) {
               light.destroy().then(function(light) {
                 response.json({ message: "Success!" })
               }).catch(function(error) {
-                response.sendStatus(500);
+                response.status(500).send(error.message);
               });
             });
           }).catch(function(error) {
-            response.sendStatus(500);
+            response.status(500).send(error.message);
           });
       });
     });
