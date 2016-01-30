@@ -26,6 +26,8 @@ module.exports = function(app, bookshelf) {
       } else {
         response.sendStatus(400);
       }
+    }).catch(function(error) {
+      
     });
   });
 
