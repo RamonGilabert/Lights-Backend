@@ -3,6 +3,7 @@ module.exports = {
 
   validate: function(request, response, keys) {
     var errors = [];
+
     keys.forEach(function(key) {
       if (request[key] === undefined) {
         errors.push(key + ' cannot be undefined.');
@@ -12,7 +13,7 @@ module.exports = {
     if (errors.length > 0) {
       response.status(400).send({ error: errors });
     }
-
+    console.log("Suo");
     return (errors.length === 0);
   },
 
