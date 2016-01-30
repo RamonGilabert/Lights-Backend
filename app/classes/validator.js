@@ -1,35 +1,28 @@
 
 module.exports = {
 
-  validate: function(object, keys) {
+  validate: function(request, response, keys) {
     var errors = [];
-
-    for (var key in keys) {
-      if (object[key] === undefined) {
+    keys.forEach(function(key) {
+      if (request[key] === undefined) {
         errors.push(key + ' cannot be undefined.');
       }
+    });
+
+    if (errors.length > 0) {
+      response.status(400).send({ error: errors });
     }
 
-    return errors;
-  }
+    return (errors.length === 0);
+  },
 
-  validateHeaders: function(object) {
-    var errors = [];
+  headers: function(request, response) {
+    return this.validate(request.headers, response, ['content-type', 'controller_id']);
+  },
 
-    if (object['Content-Type'] === undefined) {
-      errors.push('Content-Type cannot be undefined.')
-    }
-
-    if (parseInt(object['controller_id']) === undefined) {
-      errors.push('controller_id cannot be undefined.')
-    }
-
-    return errors
-  }
-
-  handleError: function(response, error) {
-    response.json()
-  }
+  controller: function(request, light) {
+    return (parseInt(light.attributes['controller_id']) === parseInt(request.headers['controller_id']));
+  },
 
   checkUndefined: function(object) {
     var isUndefined = false

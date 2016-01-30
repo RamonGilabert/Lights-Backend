@@ -132,7 +132,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z121 z140 z118"></relationship>
     </object>
     <object type="LMREQUEST" id="z110">
-        <attribute name="body" type="string">["{\\n  \\"id\\": 1,\\n  \\"controller_id\\": 1,\\n  \\"status\\": true,\\n  \\"intensity\\": 1,\\n  \\"red\\": 1,\\n  \\"green\\": 1,\\n  \\"blue\\": 1\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"status\\": true,\\n  \\"intensity\\": 1,\\n  \\"red\\": 1,\\n  \\"green\\": 1,\\n  \\"blue\\": 1\\n}"]</attribute>
         <attribute name="uuid" type="string">2FE846C6-E85C-4A76-B5E3-413BDDE8E210</attribute>
         <attribute name="url" type="string">localhost:5000/lights/0</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -145,7 +145,7 @@
         <attribute name="name" type="string">Lights</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z198"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z112 z119 z113"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z119 z113 z112"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z113">
         <attribute name="value" type="string">0</attribute>
@@ -223,7 +223,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z114"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z121">
-        <attribute name="value" type="string">1</attribute>
+        <attribute name="value" type="string">0</attribute>
         <attribute name="order" type="int64">2</attribute>
         <attribute name="name" type="string">controller_id</attribute>
         <attribute name="enabled" type="bool">1</attribute>

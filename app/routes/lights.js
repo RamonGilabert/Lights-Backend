@@ -4,7 +4,7 @@ module.exports = function(app, bookshelf) {
 
   var Light = require('../models/lights.js')(bookshelf);
   var Controllers = require('../models/controllers.js')(bookshelf);
-  var Validator = require('../classes/validator.js');
+  var Validate = require('../classes/validator.js');
 
   /* General */
 
@@ -15,8 +15,7 @@ module.exports = function(app, bookshelf) {
   /* GET */
 
   app.get('/lights', function(request, response) {
-    var errors = Validator.validateHeaders(request['headers'])
-    if (errors.length > 0) { response.json(400, { errors: errors }); };
+    if (!Validate.headers(request, response)) return;
 
     new Light()
       .fetchAll()
@@ -24,27 +23,25 @@ module.exports = function(app, bookshelf) {
         var controllerLights = [];
 
         lights.forEach(function(light) {
-          if (parseInt(light['attributes']['controller_id']) === parseInt(request['headers']['controller_id'])) {
-            controllerLights.push(light);
-          }
+          if (Validate.controller(request, light)) { controllerLights.push(light); }
         });
 
         response.json(controllerLights);
       }).catch(function(error) {
-        response.json(500, { error: error });
+        response.status(500).send(error.message);
       });
   });
 
   app.get('/lights/:id', function(request, response) {
-    new Light({ 'id' : request['params']['id'] })
+    if (!Validate.headers(request, response)) return;
+
+    new Light({ 'id' : request.params['id'] })
       .fetch()
       .then(function(light) {
-        if (light === null) {
-          response.json({});
-        } else if (request['headers']['controller_id'] != light.attributes['controller_id']) {
-          response.sendStatus(400);
+        if (Validate.controller(request, light)) {
+          response.json(light);
         } else {
-          response.json(light.toJSON());
+          response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' });
         }
       }).catch(function(error) {
         response.sendStatus(500);
@@ -54,14 +51,17 @@ module.exports = function(app, bookshelf) {
   /* PUT */
 
   app.put('/lights/:id', function(request, response) {
-    new Light({ 'id' : request['params']['id'] })
+    if (!Validate.headers(request, response)) return;
+
+    new Light({ 'id' : request.params['id'] })
       .fetch()
       .then(function(light) {
         var body = request['body'];
 
-        if (Validator.checkUndefinedObject(body, light.attributes)
-        || request['headers']['controller_id'] != light.attributes['controller_id']) {
-          response.sendStatus(401);
+        if (!Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])) {
+          return;
+        } else if (!Validate.controller(request, light)) {
+          response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' });
         } else {
           light.save({
             'updated' : new Date(),
@@ -82,7 +82,9 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
-    if (request['headers']['admin'] === "true") {
+    if (!Validate.headers(request, response)) return;
+
+    if (request.headers['admin'] === "true") {
       var body = request['body'];
 
       new Controllers({ 'id' : request['headers']['controller_id'] }).fetch().then(function(controllers) {
@@ -112,7 +114,7 @@ module.exports = function(app, bookshelf) {
         response.sendStatus(500);
       });
     } else {
-      response.sendStatus(400);
+      response.status(401).send('You are not an admin. 😠');
     }
   });
 
