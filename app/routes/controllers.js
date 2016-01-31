@@ -9,18 +9,14 @@ module.exports = function(app, bookshelf) {
   app.get('/controllers', function(request, response) {
     new Controllers().fetchAll().then(function(controllers) {
       response.json(controllers.toJSON());
-    }).catch(function(error) {
-      response.sendStatus(500);
-    });
+    }).catch(function(error) { Validate.server(error, response) });
   });
 
   app.get('/controllers/:id', function(request, response) {
     if (parseInt(request['params']['id']) === parseInt(request['headers']['controller_id'])) {
       new Controllers({ 'id' : request['params']['id'] }).fetch().then(function(controller) {
         response.json({ message : 'Cool story!', controller : controller });
-      }).catch(function(error) {
-        response.sendStatus(500);
-      });
+      }).catch(function(error) { Validate.server(error, response) });
     } else {
       response.sendStatus(400);
     }
@@ -38,9 +34,7 @@ module.exports = function(app, bookshelf) {
         }).save(null, { method : 'insert' }).then(function(controller) {
           response.json({ message : 'Created!', controller: controller });
         });
-      }).catch(function(error) {
-        response.sendStatus(500);
-      });
+      }).catch(function(error) { Validate.server(error, response) });
     } else {
       response.sendStatus(400);
     }
@@ -52,9 +46,7 @@ module.exports = function(app, bookshelf) {
     if (request['headers']['admin'] === 'true' && request['params']['id'] === request['headers']['controller_id']) {
       new Controllers({ 'id' : request['params']['id'] }).destroy().then(function() {
         response.json({ message : 'Destroyed!' });
-      }).catch(function (error) {
-        response.sendStatus(500);
-      });
+      }).catch(function(error) { Validate.server(error, response) });
     } else {
       response.sendStatus(400);
     }
