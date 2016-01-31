@@ -34,8 +34,10 @@ module.exports = function(app, bookshelf) {
       new Controllers()
       .fetchAll()
       .then(function(controllers) {
+        var controllerID = parseInt(controllers.last().attributes['id']) + 1 < controllers.length ? controllers.length : parseInt(controllers.last().attributes['id']) + 1;
+
         new Controllers({
-          'id' : controllers.length,
+          'id' : controllerID,
           'created' : new Date(),
           'updated' : new Date()
         }).save(null, { method : 'insert' }).then(function(controller) {
