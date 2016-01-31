@@ -9,25 +9,28 @@ module.exports = function(app, bookshelf) {
   // GET
 
   app.get('/schedules/:id', function(request, response) {
-    new Light({ 'id' : request['params']['id'] })
-    .fetch()
-    .then(function(light) {
-      Validate.controller(request, light)
-      .then(function() {
-        new Schedule()
-        .fetchAll()
-        .then(function(schedules) {
-          var lightSchedules = [];
-          schedules.forEach(function(schedule) {
-            if (schedule['attributes']['light_id'] == request['params']['id']) {
-              lightSchedules.push(schedule);
-            }
-          });
+    Validate.headers(request, response)
+    .then(function() {
+      new Light({ 'id' : request['params']['id'] })
+      .fetch()
+      .then(function(light) {
+        Validate.controller(request, light)
+        .then(function() {
+          new Schedule()
+          .fetchAll()
+          .then(function(schedules) {
+            var lightSchedules = [];
+            schedules.forEach(function(schedule) {
+              if (schedule['attributes']['light_id'] == request['params']['id']) {
+                lightSchedules.push(schedule);
+              }
+            });
 
-          response.json({ message: "Cool story!", schedules: lightSchedules });
-        }).catch(function(error) { Validate.server(error, response) });
-      });
-    }).catch(function(error) { Validate.server(error, response) });
+            response.json({ message: "Cool story!", schedules: lightSchedules });
+          }).catch(function(error) { Validate.server(error, response) });
+        });
+      }).catch(function(error) { Validate.server(error, response) });
+    });
   });
 
   // POST
