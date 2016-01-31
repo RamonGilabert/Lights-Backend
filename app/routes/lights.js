@@ -15,55 +15,62 @@ module.exports = function(app, bookshelf) {
   /* GET */
 
   app.get('/lights', function(request, response) {
-    Validate.headers(request, response).then(function() {
+    Validate.headers(request, response)
+    .then(function() {
       new Light()
-        .fetchAll()
-        .then(function(lights) {
-          var controllerLights = [];
+      .fetchAll()
+      .then(function(lights) {
+        var controllerLights = [];
 
-          lights.forEach(function(light) {
-            if (Validate.controllers(request, light)) controllerLights.push(light);
-          });
+        lights.forEach(function(light) {
+          if (Validate.controllers(request, light)) controllerLights.push(light);
+        });
 
-          response.json(controllerLights);
-        }).catch(function(error) { Validate.server(error, response) });
+        response.json(controllerLights);
+      }).catch(function(error) { Validate.server(error, response) });
     });
   });
 
   app.get('/lights/:id', function(request, response) {
     Validate.headers(request, response)
-      .then(function() {
-        new Light({ 'id' : request.params['id'] })
-          .fetch()
-          .then(function(light) {
-            Validate.controller(request, light, response).then(function() {
-              response.json(light);
-            });
-          }).catch(function(error) { Validate.server(error, response) });
-      });
+    .then(function() {
+      new Light({ 'id' : request.params['id'] })
+      .fetch()
+      .then(function(light) {
+        Validate.controller(request, light, response).then(function() {
+          response.json(light);
+        });
+      }).catch(function(error) { Validate.server(error, response) });
+    });
   });
 
   /* PUT */
 
   app.put('/lights/:id', function(request, response) {
-    Validate.headers(request, response).then(function() {
+    Validate.headers(request, response)
+    .then(function() {
       new Light({ 'id' : request.params['id'] })
-        .fetch()
-        .then(function(light) {
-          var body = request['body'];
-          Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']).then(Validate.controller(request, light, response)).then(function() {
-            light.save({
-              'updated' : new Date(),
-              'status' : body['status'],
-              'intensity' : parseFloat(body['intensity']),
-              'red' : parseFloat(body['red']),
-              'blue' : parseFloat(body['blue']),
-              'green' : parseFloat(body['green'])
-            }, { patch : true }).then(function(light) {
-              response.json({ message: 'Cool story!', light: light });
-            }).catch(function(error) { Validate.server(error, response) });
-          });
+      .fetch()
+      .then(function(light) {
+        var body = request['body'];
+
+        Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])
+        .then(function() {
+          Validate.controller(request, light, response)
+        })
+        .then(function() {
+          light.save({
+            'updated' : new Date(),
+            'status' : body['status'],
+            'intensity' : parseFloat(body['intensity']),
+            'red' : parseFloat(body['red']),
+            'blue' : parseFloat(body['blue']),
+            'green' : parseFloat(body['green'])
+          }, { patch : true }).then(function(light) {
+            response.json({ message: 'Cool story!', light: light });
+          }).catch(function(error) { Validate.server(error, response) });
         });
+      });
     });
   });
 
