@@ -6,7 +6,7 @@ module.exports = function(app, bookshelf) {
   var Schedule = require('../models/schedules.js')(bookshelf);
   var Validate = require('../classes/validator.js');
 
-  // GET
+  /* GET */
 
   app.get('/schedules/:id', function(request, response) {
     Validate.headers(request, response)
@@ -33,7 +33,7 @@ module.exports = function(app, bookshelf) {
     });
   });
 
-  // POST
+  /* POST */
 
   app.post('/schedules/:light_id', function(request, response) {
     Validate.headers(request, response)
@@ -77,7 +77,7 @@ module.exports = function(app, bookshelf) {
     });
   });
 
-  // DELETE
+  /* DELETE */
 
   app.delete('/schedules/:id', function(request, response) {
     Validate.headers(request, response)
