@@ -1,16 +1,8 @@
 # Lights Backend
 
-This is the backend for the Lights project that will be build in NodeJS.
+This is the backend for the Lights project that will be build in NodeJS. The link for the server is: [Backend](https://lights-backend.herokuapp.com).
 
-The link for the server is: [Backend](https://lights-backend.herokuapp.com).
-
-The server side of the project will provide basic functionality to:
-
-- `GET` an object called `light` that will contain information about if it's on, off, the intensity and RGB value.
-- `PUT` new information about any of the topics stated above, so intensity, level, etc.
-
-- The server will also talk with the Raspberry Pi and will get information and post information to the LEDs.
-- The server will also have memory, so you'll be able to program the lights to open and close at a given time.
+Here you can get the basic documentation to talk to the server.
 
 ## Documentation
 
@@ -51,17 +43,6 @@ With the possibility of extend the get request with an specific ID, this request
 [
   {
     "id": 5,
-    "created": "2016-01-28T00:00:00.000Z",
-    "updated": "2016-01-28T00:00:00.000Z",
-    "status": false,
-    "intensity": 1,
-    "red": 1,
-    "green": 1,
-    "blue": 1,
-    "controller_id": 1
-  },
-  {
-    "id": 6,
     "created": "2016-01-28T00:00:00.000Z",
     "updated": "2016-01-28T00:00:00.000Z",
     "status": false,
@@ -170,11 +151,6 @@ With one controller id as an option to check how the controller looks like. The 
     "id": 1,
     "created": "2016-01-24T00:00:00.000Z",
     "updated": "2016-01-24T00:00:00.000Z"
-  },
-  {
-    "id": 0,
-    "created": "2016-01-24T00:00:00.000Z",
-    "updated": "2016-01-24T00:00:00.000Z"
   }
 ]
 ```
@@ -226,17 +202,6 @@ The response to the request will be the following.
       "green": 1,
       "blue": 1,
       "id": 0
-    },
-    {
-      "light_id": 0,
-      "created": "2016-01-28T00:00:00.000Z",
-      "schedule": "2016-03-10T00:00:00.000Z",
-      "status": true,
-      "intensity": 1,
-      "red": 1,
-      "green": 1,
-      "blue": 1,
-      "id": 1
     }
   ]
 }
