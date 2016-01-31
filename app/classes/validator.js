@@ -50,5 +50,9 @@ module.exports = {
         reject();
       }
     });
+  },
+
+  server: function(error, response) {
+    response.status(500).send({ error: error.message });
   }
 }

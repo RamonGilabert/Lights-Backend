@@ -26,9 +26,7 @@ module.exports = function(app, bookshelf) {
           });
 
           response.json(controllerLights);
-        }).catch(function(error) {
-          response.status(500).send(error.message);
-        });
+        }).catch(function(error) { Validate.server(error, response) });
     });
   });
 
@@ -40,9 +38,7 @@ module.exports = function(app, bookshelf) {
           Validate.controller(request, light, response).then(function() {
             response.json(light);
           });
-        }).catch(function(error) {
-          response.status(500).send(error.message);
-        });
+        }).catch(function(error) { Validate.server(error, response) });
     });
   });
 
@@ -64,9 +60,7 @@ module.exports = function(app, bookshelf) {
               'green' : parseFloat(body['green'])
             }, { patch : true }).then(function(light) {
               response.json({ message: 'Cool story!', light: light });
-            }).catch(function(error) {
-              response.status(500).send(error.message);
-            });
+            }).catch(function(error) { Validate.server(error, response) });
           });
         });
     });
@@ -102,13 +96,9 @@ module.exports = function(app, bookshelf) {
                   'green' : parseFloat(body['green'])
                 }).save(null, { method: 'insert' }).then(function(light) {
                   response.json({ message: 'Cool story!', light: light });
-                }).catch(function(error) {
-                  response.status(500).send(error.message);
-                });
+                }).catch(function(error) { Validate.server(error, response) });
             });
-          }).catch(function(error) {
-            response.status(500).send(error.message);
-          });
+          }).catch(function(error) { Validate.server(error, response) });
       });
   });
 
@@ -128,9 +118,7 @@ module.exports = function(app, bookshelf) {
                 response.status(500).send(error.message);
               });
             });
-          }).catch(function(error) {
-            response.status(500).send(error.message);
-          });
+          }).catch(function(error) { Validate.server(error, response) });
       });
     });
 };
