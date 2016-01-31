@@ -28,14 +28,27 @@ module.exports = {
     return (parseInt(light.attributes['controller_id']) === parseInt(request.headers['controller_id']));
   },
 
-  controller: function(request, light, response) {
-    return new Promise(function(resolve, reject) {
-      var value = parseInt(light.attributes['controller_id']) === parseInt(request.headers['controller_id']);
+  controllersValue: function(request) {
+    return (parseInt(request.params['id']) === parseInt(request.headers['controller_id']));
+  },
 
+  controller: function(request, light, response) {
+    var value = this.controllers(request, light);
+    return this.controllerValidation(value, response);
+  },
+
+  controllerRequest: function(request, response) {
+    var value = this.controllersValue(request);
+
+    return this.controllerValidation(value, response);
+  },
+
+  controllerValidation: function(value, response) {
+    return new Promise(function(resolve, reject) {
       if (value) {
         resolve();
       } else {
-        response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' })
+        response.status(400).send({ error : 'The controller_id must be the same than the one in the light.' });
         reject();
       }
     });

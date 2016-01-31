@@ -31,15 +31,16 @@ module.exports = function(app, bookshelf) {
   });
 
   app.get('/lights/:id', function(request, response) {
-    Validate.headers(request, response).then(function() {
-      new Light({ 'id' : request.params['id'] })
-        .fetch()
-        .then(function(light) {
-          Validate.controller(request, light, response).then(function() {
-            response.json(light);
-          });
-        }).catch(function(error) { Validate.server(error, response) });
-    });
+    Validate.headers(request, response)
+      .then(function() {
+        new Light({ 'id' : request.params['id'] })
+          .fetch()
+          .then(function(light) {
+            Validate.controller(request, light, response).then(function() {
+              response.json(light);
+            });
+          }).catch(function(error) { Validate.server(error, response) });
+      });
   });
 
   /* PUT */
@@ -70,8 +71,12 @@ module.exports = function(app, bookshelf) {
 
   app.post('/lights', function(request, response) {
     Validate.admin(request, response)
-      .then(Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']))
-      .then(Validate.headers(request, response))
+      .then(function() {
+        return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])
+      })
+      .then(function() {
+        return Validate.headers(request, response)
+      })
       .then(function() {
         var body = request['body'];
 
@@ -106,7 +111,9 @@ module.exports = function(app, bookshelf) {
 
   app.delete('/lights/:id', function(request, response) {
     Validate.admin(request, response)
-      .then(Validate.headers(request, response))
+      .then(function() {
+        Validate.headers(request, response)
+      })
       .then(function() {
         new Light({ 'id' : request.params['id'] })
           .fetch()
