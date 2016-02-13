@@ -13,10 +13,19 @@ app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 
   require('./app/routes/lights.js')(app, bookshelf);
   require('./app/routes/controllers.js')(app, bookshelf);
   require('./app/routes/schedules.js')(app, bookshelf);
+});
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+  console.log('Connected');
+  socket.on('lights', function() {
+    socket.emit('Editing a light');
+  });
 });

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "Ramon Gilabert",
   "name": "lights-backend",
+  "license": "BSD-3-Clause",
   "main": "app.js",
   "dependencies": {
     "body-parser": "~1.14.2",
