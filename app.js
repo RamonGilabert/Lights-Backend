@@ -21,7 +21,7 @@ var server = app.listen(app.get('port'), function() {
   require('./app/routes/schedules.js')(app, bookshelf);
 });
 
-var io = require('socket.io')();
+var io = require('socket.io')(server);
 
 io.on('connection', function(socket) {
   console.log('Connected');
