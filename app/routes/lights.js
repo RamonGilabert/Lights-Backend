@@ -78,6 +78,9 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
+    Validate.admin(request, response).then(Validate.headers(request, response)).then(function() {
+
+    })
     Validate.admin(request, response)
     .then(function() {
       return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])
