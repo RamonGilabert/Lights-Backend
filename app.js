@@ -4,6 +4,7 @@ var pg = require('pg');
 var app = express();
 var databaseAddress = process.env.DATABASE_URL || 'postgres://localhost';
 var bookshelf = require('./app/database/schema.js')(databaseAddress);
+var io = require('socket.io')();
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
