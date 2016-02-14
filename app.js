@@ -21,4 +21,4 @@ var server = app.listen(app.get('port'), function() {
   require('./app/routes/schedules.js')(app, bookshelf);
 });
 
-require('./app/classes/socket.js')(server);
+require('./app/classes/socket.js')(server, bookshelf);
