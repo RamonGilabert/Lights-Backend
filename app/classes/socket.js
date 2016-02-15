@@ -11,9 +11,9 @@ module.exports = function(server, bookshelf) {
 
     socket.on('ios-light', function(light) {
       new Light()
-      .fetch({ 'id' : light.id, 'token' : light.token })
+      .fetch({ 'id' : light.id })
       .then(function(bookshelfLight) {
-        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID)) {
+        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && light.token == bookshelfLight.token) {
           socket.emit('light-' + light.controllerID, { light: light });
 
           bookshelfLight.save({
