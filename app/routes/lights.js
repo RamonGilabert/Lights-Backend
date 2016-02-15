@@ -82,9 +82,6 @@ module.exports = function(app, bookshelf) {
   /* POST */
 
   app.post('/lights', function(request, response) {
-    Validate.admin(request, response).then(Validate.headers(request, response)).then(function() {
-
-    })
     Validate.admin(request, response)
     .then(function() {
       return Validate.headers(request, response)
@@ -117,7 +114,6 @@ module.exports = function(app, bookshelf) {
             'green' : 1,
             'token' : Math.random().toString(30).substring(2)
           }).save(null, { method: 'insert' }).then(function(light) {
-            delete light.attributes.token;
             response.json({ message: 'Cool story!', light: light.attributes });
           }).catch(function(error) { Validate.server(error, response) });
         });
