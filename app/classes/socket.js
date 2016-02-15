@@ -13,7 +13,7 @@ module.exports = function(server, bookshelf) {
       new Light()
       .fetch({ 'id' : light.id })
       .then(function(bookshelfLight) {
-        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && light.token === bookshelfLight.token) {
+        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && light.token === bookshelfLight.attributes.token) {
           socket.emit('light-' + light.controllerID, { light: light });
 
           bookshelfLight.save({
@@ -32,7 +32,7 @@ module.exports = function(server, bookshelf) {
       new Light()
       .fetch({ 'id' : light.id })
       .then(function(bookshelfLight) {
-        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && light.token === bookshelfLight.token) {
+        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && light.token === bookshelfLight.attributes.token) {
           socket.emit('ios-light-' + light.controllerID, { light: light });
 
           bookshelfLight.save({
