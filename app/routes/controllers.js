@@ -34,7 +34,11 @@ module.exports = function(app, bookshelf) {
       new Controllers()
       .fetchAll()
       .then(function(controllers) {
-        var controllerID = parseInt(controllers.last().attributes['id']) + 1 < controllers.length ? controllers.length : parseInt(controllers.last().attributes['id']) + 1;
+        var controllerID = 0;
+
+        if (controllers.last() != undefined) {
+          controllerID = parseInt(controllers.last().attributes['id']) + 1 < controllers.length ? controllers.length : parseInt(controllers.last().attributes['id']) + 1;
+        }
 
         new Controllers({
           'id' : controllerID,

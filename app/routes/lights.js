@@ -24,7 +24,7 @@ module.exports = function(app, bookshelf) {
 
         lights.forEach(function(light) {
           if (Validate.controllers(request, light)) {
-            delete light.token;
+            delete light.attributes.token;
             controllerLights.push(light);
           }
         });
@@ -41,7 +41,7 @@ module.exports = function(app, bookshelf) {
       .fetch()
       .then(function(light) {
         Validate.controller(request, light, response).then(function() {
-          delete light.token;
+          delete light.attributes.token;
           response.json(light);
         });
       }).catch(function(error) { Validate.server(error, response) });
@@ -99,7 +99,11 @@ module.exports = function(app, bookshelf) {
         .query(function(query) { query.orderBy('id'); })
         .fetchAll()
         .then(function(lights) {
-          var lightID = parseInt(lights.last().attributes['id']) + 1 < lights.length ? lights.length : parseInt(lights.last().attributes['id']) + 1;
+          var lightID = 0;
+
+          if (lights.last() != undefined) {
+            lightID = parseInt(lights.last().attributes['id']) + 1 < lights.length ? lights.length : parseInt(lights.last().attributes['id']) + 1;
+          }
 
           new Light({
             'id' : lightID,
@@ -113,8 +117,8 @@ module.exports = function(app, bookshelf) {
             'green' : 1,
             'token' : Math.random().toString(30).substring(2)
           }).save(null, { method: 'insert' }).then(function(light) {
-            delete light.token;
-            response.json({ message: 'Cool story!', light: light });
+            delete light.attributes.token;
+            response.json({ message: 'Cool story!', light: light.attributes });
           }).catch(function(error) { Validate.server(error, response) });
         });
       }).catch(function(error) { Validate.server(error, response) });
