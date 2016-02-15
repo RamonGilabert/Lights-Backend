@@ -23,7 +23,10 @@ module.exports = function(app, bookshelf) {
         var controllerLights = [];
 
         lights.forEach(function(light) {
-          if (Validate.controllers(request, light)) controllerLights.push(light);
+          if (Validate.controllers(request, light)) {
+            delete light.token;
+            controllerLights.push(light);
+          }
         });
 
         response.json(controllerLights);
@@ -38,6 +41,7 @@ module.exports = function(app, bookshelf) {
       .fetch()
       .then(function(light) {
         Validate.controller(request, light, response).then(function() {
+          delete light.token;
           response.json(light);
         });
       }).catch(function(error) { Validate.server(error, response) });
@@ -83,16 +87,13 @@ module.exports = function(app, bookshelf) {
     })
     Validate.admin(request, response)
     .then(function() {
-      return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue'])
-    })
-    .then(function() {
       return Validate.headers(request, response)
     })
     .then(function() {
       var body = request['body'];
 
-      new Controllers({ 'id' : request.headers['controller_id'] })
-      .fetch()
+      new Controllers()
+      .fetch({ 'id' : request.headers['controller_id'] })
       .then(function(controllers) {
         new Light()
         .query(function(query) { query.orderBy('id'); })
@@ -106,11 +107,13 @@ module.exports = function(app, bookshelf) {
             'created' : new Date(),
             'updated' : new Date(),
             'status' : false,
-            'intensity' : parseFloat(body['intensity']),
-            'red' : parseFloat(body['red']),
-            'blue' : parseFloat(body['blue']),
-            'green' : parseFloat(body['green'])
+            'intensity' : 1,
+            'red' : 1,
+            'blue' : 1,
+            'green' : 1,
+            'token' : Math.random().toString(30).substring(2)
           }).save(null, { method: 'insert' }).then(function(light) {
+            delete light.token;
             response.json({ message: 'Cool story!', light: light });
           }).catch(function(error) { Validate.server(error, response) });
         });
