@@ -89,8 +89,8 @@ module.exports = function(app, bookshelf) {
     .then(function() {
       var body = request['body'];
 
-      new Controllers()
-      .fetch({ 'id' : request.headers['controller_id'] })
+      new Controllers({ 'id' : request.headers['controller_id'] })
+      .fetch()
       .then(function(controllers) {
         new Light()
         .query(function(query) { query.orderBy('id'); })

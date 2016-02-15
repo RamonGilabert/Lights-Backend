@@ -10,11 +10,9 @@ module.exports = function(server, bookshelf) {
     console.log('Something connected to the socket.');
 
     socket.on('ios-light', function(light) {
-      console.log(light);
       new Light({ 'id' : light.id })
       .fetch()
       .then(function(bookshelfLight) {
-        console.log(bookshelfLight.attributes);
         if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
           socket.emit('light-' + light.controllerID, { light: light });
 
@@ -31,8 +29,8 @@ module.exports = function(server, bookshelf) {
     });
 
     socket.on('server-light', function(light) {
-      new Light()
-      .fetch({ 'id' : light.id })
+      new Light({ 'id' : light.id })
+      .fetch()
       .then(function(bookshelfLight) {
         if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
           socket.emit('ios-light-' + light.controllerID, { light: light });
