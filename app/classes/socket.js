@@ -14,7 +14,7 @@ module.exports = function(server, bookshelf) {
       .fetch()
       .then(function(bookshelfLight) {
         if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
-          socket.emit('light-' + light.controllerID, { light: light });
+          socket.broadcast.emit('light-' + light.controllerID, { light: light });
 
           bookshelfLight.save({
             'updated' : new Date(),
@@ -33,7 +33,7 @@ module.exports = function(server, bookshelf) {
       .fetch()
       .then(function(bookshelfLight) {
         if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
-          socket.emit('ios-light-' + light.controllerID, { light: light });
+          socket.broadcast.emit('ios-light-' + light.controllerID, { light: light });
 
           bookshelfLight.save({
             'updated' : new Date(),
