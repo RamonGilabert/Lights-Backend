@@ -112,7 +112,8 @@ module.exports = function(app, bookshelf) {
             'red' : 1,
             'blue' : 1,
             'green' : 1,
-            'token' : Math.random().toString(30).substring(2)
+            'token' : Math.random().toString(30).substring(2),
+            'address' : body['address']
           }).save(null, { method: 'insert' }).then(function(light) {
             response.json({ message: 'Cool story!', light: light.attributes });
           }).catch(function(error) { Validate.server(error, response) });
