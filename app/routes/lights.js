@@ -2,6 +2,8 @@
 
 module.exports = function(app, bookshelf) {
 
+  var io = require('socket.io-client');
+  var socket = io.connect('http://lights-backend.herokuapp.com', { reconnect: true });
   var Light = require('../models/lights.js')(bookshelf);
   var Controllers = require('../models/controllers.js')(bookshelf);
   var Validate = require('../classes/validator.js');
@@ -51,32 +53,34 @@ module.exports = function(app, bookshelf) {
   /* PUT */
 
   app.put('/lights/:id', function(request, response) {
-    Validate.headers(request, response)
-    .then(function() {
-      return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']);
-    })
-    .then(function() {
-      new Light({ 'id' : request.params['id'] })
-      .fetch()
-      .then(function(light) {
-        var body = request['body'];
+    if (!true) {
+      Validate.headers(request, response)
+      .then(function() {
+        return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']);
+      })
+      .then(function() {
+        new Light({ 'id' : request.params['id'] })
+        .fetch()
+        .then(function(light) {
+          var body = request['body'];
 
-        Validate.controller(request, light, response)
-        .then(function() {
-          light.save({
-            'updated' : new Date(),
-            'status' : body['status'],
-            'intensity' : parseFloat(body['intensity']),
-            'red' : parseFloat(body['red']),
-            'blue' : parseFloat(body['blue']),
-            'green' : parseFloat(body['green'])
-          }, { patch : true })
-          .then(function(light) {
-            response.json({ message: 'Cool story!', light: light });
-          }).catch(function(error) { Validate.server(error, response) });
+          Validate.controller(request, light, response)
+          .then(function() {
+            light.save({
+              'updated' : new Date(),
+              'status' : body['status'],
+              'intensity' : parseFloat(body['intensity']),
+              'red' : parseFloat(body['red']),
+              'blue' : parseFloat(body['blue']),
+              'green' : parseFloat(body['green'])
+            }, { patch : true })
+            .then(function(light) {
+              response.json({ message: 'Cool story!', light: light });
+            }).catch(function(error) { Validate.server(error, response) });
+          });
         });
       });
-    });
+    }
   });
 
   /* POST */
@@ -115,6 +119,7 @@ module.exports = function(app, bookshelf) {
             'token' : Math.random().toString(30).substring(2),
             'address' : body['address']
           }).save(null, { method: 'insert' }).then(function(light) {
+            socket.emit('new-ios-light', { light: light });
             response.json({ message: 'Cool story!', light: light.attributes });
           }).catch(function(error) { Validate.server(error, response) });
         });
@@ -135,7 +140,8 @@ module.exports = function(app, bookshelf) {
       .then(function(light) {
         Validate.controller(request, light, response)
         .then(function() {
-          light.destroy().then(function(light) {
+          socket.emit('delete-ios-light', { light: light.attributes });
+          light.destroy().then(function() {
             response.json({ message: "Success!" })
           }).catch(function(error) {
             response.status(500).send(error.message);

@@ -3,6 +3,7 @@
 module.exports = function(server, bookshelf) {
 
   var io = require('socket.io')(server);
+  var Controller = require('../models/controllers.js')(bookshelf);
   var Light = require('../models/lights.js')(bookshelf);
   var Validate = require('../classes/validator.js');
 
@@ -10,21 +11,27 @@ module.exports = function(server, bookshelf) {
     console.log('Something connected to the socket.');
 
     socket.on('ios-light', function(light) {
-      new Light({ 'id' : light.id })
+      new Controller({ 'id' : light['controller_id'] })
       .fetch()
-      .then(function(bookshelfLight) {
-        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
-          socket.broadcast.emit('light-' + light.controllerID, { light: light });
+      .then(function(bookshelfController) {
+        new Light({ 'id' : light.id })
+        .fetch()
+        .then(function(bookshelfLight) {
+          if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID)
+          && String(light.token) === String(bookshelfLight.attributes['token'])
+          && String(light.controllerToken) === String(bookshelfController.attributes['token'])) {
+            socket.broadcast.emit('light-' + light.controllerID, { light: light });
 
-          bookshelfLight.save({
-            'updated' : new Date(),
-            'status' : light.status,
-            'intensity' : light.intensity,
-            'red' : light.red,
-            'blue' : light.blue,
-            'green' : light.green
-          }, { patch : true })
-        }
+            bookshelfLight.save({
+              'updated' : new Date(),
+              'status' : light.status,
+              'intensity' : light.intensity,
+              'red' : light.red,
+              'blue' : light.blue,
+              'green' : light.green
+            }, { patch : true })
+          }
+        });
       });
     });
 
@@ -45,6 +52,14 @@ module.exports = function(server, bookshelf) {
           }, { patch : true })
         }
       });
+    });
+
+    socket.on('new-ios-light', function(light) {
+      socket.broadcast.emit('new-ios-light-' + light.light['controller_id'], { light: light.light });
+    });
+
+    socket.on('delete-ios-light', function(light) {
+      socket.broadcast.emit('delete-ios-light-' + light.light['controller_id'], { light: light.light });
     });
   });
 };

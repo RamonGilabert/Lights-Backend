@@ -11,7 +11,14 @@ module.exports = function(app, bookshelf) {
     new Controllers()
     .fetchAll()
     .then(function(controllers) {
-      response.json(controllers.toJSON());
+      var finalControllers = [];
+
+      controllers.models.forEach(function(controller) {
+        delete controller.attributes.token;
+        finalControllers.push(controller.attributes);
+      });
+
+      response.json(finalControllers);
     }).catch(function(error) { Validate.server(error, response) });
   });
 
@@ -21,6 +28,7 @@ module.exports = function(app, bookshelf) {
       new Controllers({ 'id' : request['params']['id'] })
       .fetch()
       .then(function(controller) {
+        delete controller.attributes.token;
         response.json({ message : 'Cool story!', controller : controller });
       }).catch(function(error) { Validate.server(error, response) });
     });
@@ -43,7 +51,8 @@ module.exports = function(app, bookshelf) {
         new Controllers({
           'id' : controllerID,
           'created' : new Date(),
-          'updated' : new Date()
+          'updated' : new Date(),
+          'token' : Math.random().toString(30).substring(2)
         }).save(null, { method : 'insert' }).then(function(controller) {
           response.json({ message : 'Created!', controller: controller });
         });
