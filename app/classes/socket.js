@@ -19,7 +19,7 @@ module.exports = function(server, bookshelf) {
         .then(function(bookshelfLight) {
           if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID)
           && String(light.token) === String(bookshelfLight.attributes['token'])
-          && String(light.controllerToken) === String(bookshelfController.attributes['token'])) {
+          && String(light['controller_token']) === String(bookshelfController.attributes['token'])) {
             socket.broadcast.emit('light-' + light.controllerID, { light: light });
 
             bookshelfLight.save({
