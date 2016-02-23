@@ -18,7 +18,6 @@ module.exports = function(server, bookshelf) {
         .fetch()
         .then(function(bookshelfLight) {
           if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light['controller_id'])
-          && String(light.token) === String(bookshelfLight.attributes['token'])
           && String(light['controller_token']) === String(bookshelfController.attributes['token'])) {
             socket.broadcast.emit('light-' + light['controller_id'], { light: light });
 
@@ -36,21 +35,26 @@ module.exports = function(server, bookshelf) {
     });
 
     socket.on('server-light', function(light) {
-      new Light({ 'id' : light.id })
+      new Controller({ 'id' : light['controller_id'] })
       .fetch()
-      .then(function(bookshelfLight) {
-        if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID) && String(light.token) === String(bookshelfLight.attributes['token'])) {
-          socket.broadcast.emit('ios-light-' + light.controllerID, { light: light });
+      .then(function(bookshelfController) {
+        new Light({ 'id' : light.id })
+        .fetch()
+        .then(function(bookshelfLight) {
+          if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light['controller_id'])
+          && String(light['controller_token']) === String(bookshelfController.attributes['token'])) {
+            socket.broadcast.emit('ios-light-' + light['controller_id'], { light: light });
 
-          bookshelfLight.save({
-            'updated' : new Date(),
-            'status' : light.status,
-            'intensity' : light.intensity,
-            'red' : light.red,
-            'blue' : light.blue,
-            'green' : light.green
-          }, { patch : true })
-        }
+            bookshelfLight.save({
+              'updated' : new Date(),
+              'status' : light.status,
+              'intensity' : light.intensity,
+              'red' : light.red,
+              'blue' : light.blue,
+              'green' : light.green
+            }, { patch : true })
+          }
+        });
       });
     });
 
