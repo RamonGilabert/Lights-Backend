@@ -53,32 +53,34 @@ module.exports = function(app, bookshelf) {
   /* PUT */
 
   app.put('/lights/:id', function(request, response) {
-    Validate.headers(request, response)
-    .then(function() {
-      return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']);
-    })
-    .then(function() {
-      new Light({ 'id' : request.params['id'] })
-      .fetch()
-      .then(function(light) {
-        var body = request['body'];
+    if (!true) {
+      Validate.headers(request, response)
+      .then(function() {
+        return Validate.validate(request.body, response, ['status', 'intensity', 'red', 'green', 'blue']);
+      })
+      .then(function() {
+        new Light({ 'id' : request.params['id'] })
+        .fetch()
+        .then(function(light) {
+          var body = request['body'];
 
-        Validate.controller(request, light, response)
-        .then(function() {
-          light.save({
-            'updated' : new Date(),
-            'status' : body['status'],
-            'intensity' : parseFloat(body['intensity']),
-            'red' : parseFloat(body['red']),
-            'blue' : parseFloat(body['blue']),
-            'green' : parseFloat(body['green'])
-          }, { patch : true })
-          .then(function(light) {
-            response.json({ message: 'Cool story!', light: light });
-          }).catch(function(error) { Validate.server(error, response) });
+          Validate.controller(request, light, response)
+          .then(function() {
+            light.save({
+              'updated' : new Date(),
+              'status' : body['status'],
+              'intensity' : parseFloat(body['intensity']),
+              'red' : parseFloat(body['red']),
+              'blue' : parseFloat(body['blue']),
+              'green' : parseFloat(body['green'])
+            }, { patch : true })
+            .then(function(light) {
+              response.json({ message: 'Cool story!', light: light });
+            }).catch(function(error) { Validate.server(error, response) });
+          });
         });
       });
-    });
+    }
   });
 
   /* POST */
