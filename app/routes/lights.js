@@ -2,6 +2,8 @@
 
 module.exports = function(app, bookshelf) {
 
+  var io = require('socket.io-client');
+  var socket = io.connect('http://localhost:5000', { reconnect: true });
   var Light = require('../models/lights.js')(bookshelf);
   var Controllers = require('../models/controllers.js')(bookshelf);
   var Validate = require('../classes/validator.js');
@@ -115,6 +117,7 @@ module.exports = function(app, bookshelf) {
             'token' : Math.random().toString(30).substring(2),
             'address' : body['address']
           }).save(null, { method: 'insert' }).then(function(light) {
+            socket.emit('new-ios-light', { light: light });
             response.json({ message: 'Cool story!', light: light.attributes });
           }).catch(function(error) { Validate.server(error, response) });
         });
@@ -135,7 +138,8 @@ module.exports = function(app, bookshelf) {
       .then(function(light) {
         Validate.controller(request, light, response)
         .then(function() {
-          light.destroy().then(function(light) {
+          socket.emit('delete-ios-light', { light: light.attributes });
+          light.destroy().then(function() {
             response.json({ message: "Success!" })
           }).catch(function(error) {
             response.status(500).send(error.message);

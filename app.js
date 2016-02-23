@@ -15,10 +15,9 @@ app.set('view engine', 'ejs');
 
 var server = app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
-
-  require('./app/routes/lights.js')(app, bookshelf);
-  require('./app/routes/controllers.js')(app, bookshelf);
-  require('./app/routes/schedules.js')(app, bookshelf);
 });
 
+require('./app/routes/lights.js')(app, bookshelf);
+require('./app/routes/controllers.js')(app, bookshelf);
+require('./app/routes/schedules.js')(app, bookshelf);
 require('./app/classes/socket.js')(server, bookshelf);

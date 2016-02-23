@@ -46,5 +46,13 @@ module.exports = function(server, bookshelf) {
         }
       });
     });
+
+    socket.on('new-ios-light', function(light) {
+      socket.broadcast.emit('new-ios-light-' + light.light['controller_id'], { light: light.light });
+    });
+
+    socket.on('delete-ios-light', function(light) {
+      socket.broadcast.emit('delete-ios-light-' + light.light['controller_id'], { light: light.light });
+    });
   });
 };
