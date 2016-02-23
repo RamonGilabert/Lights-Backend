@@ -3,7 +3,7 @@
 module.exports = function(app, bookshelf) {
 
   var io = require('socket.io-client');
-  var socket = io.connect('http://localhost:5000', { reconnect: true });
+  var socket = io.connect('http://lights-backend.herokuapp.com', { reconnect: true });
   var Light = require('../models/lights.js')(bookshelf);
   var Controllers = require('../models/controllers.js')(bookshelf);
   var Validate = require('../classes/validator.js');
