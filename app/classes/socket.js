@@ -14,15 +14,13 @@ module.exports = function(server, bookshelf) {
       new Controller({ 'id' : light['controller_id'] })
       .fetch()
       .then(function(bookshelfController) {
-        console.log(bookshelfController.attributes['token']);
-        console.log(light['controller_token']);
         new Light({ 'id' : light.id })
         .fetch()
         .then(function(bookshelfLight) {
           if (parseInt(bookshelfLight.attributes['controller_id']) === parseInt(light.controllerID)
           && String(light.token) === String(bookshelfLight.attributes['token'])
           && String(light['controller_token']) === String(bookshelfController.attributes['token'])) {
-            socket.broadcast.emit('light-' + light.controllerID, { light: light });
+            socket.broadcast.emit('light-' + light['controller_id'], { light: light });
 
             bookshelfLight.save({
               'updated' : new Date(),
