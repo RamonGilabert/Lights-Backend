@@ -14,6 +14,8 @@ module.exports = function(server, bookshelf) {
       new Controller({ 'id' : light['controller_id'] })
       .fetch()
       .then(function(bookshelfController) {
+        console.log(bookshelfController.attributes['token']);
+        console.log(light['controller_token']);
         new Light({ 'id' : light.id })
         .fetch()
         .then(function(bookshelfLight) {
