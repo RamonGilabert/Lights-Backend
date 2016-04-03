@@ -113,9 +113,9 @@ module.exports = function(app, bookshelf) {
             'updated' : new Date(),
             'status' : false,
             'intensity' : 1,
-            'red' : 1,
+            'red' : 0,
             'blue' : 1,
-            'green' : 1,
+            'green' : 0.88,
             'token' : Math.random().toString(30).substring(2),
             'address' : body['address']
           }).save(null, { method: 'insert' }).then(function(light) {
